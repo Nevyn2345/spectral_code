@@ -12,8 +12,8 @@ cut_y=9;                                               %Hieght of Spectra
 %load('/Users/Ashley/Desktop/Sams-Final/ABmat.mat')
 load('transformmat.mat');
 Real_path=strcat('Data', slash, 'real',slash);            %Real Images (not really needed)
-Spectral_path=('Data', slash, 'spectral',slash);     %Spectra Images NEEDED
-Real_points_path=('Data', slash, 'points.csv');
+Spectral_path=strcat('Data', slash, 'spectral',slash);     %Spectra Images NEEDED
+Real_points_path=strcat('Data', slash, 'points.csv');
 % Points identifies using external code
 
 %load('/Users/Ashley/Desktop/Sams/transforms.mat');      %A and B matricies
@@ -75,6 +75,8 @@ plot_data=0;                        % Plot it
 new_Storage=Storage(:,:,indfinal);  %select only filtered spectra
 %[ spectra_out,resn ] = SS_Fit_Spectra( new_Storage, cut_y,double_fit, plot_data );
 %[ spectra_out, resn ] = SS_fit_spectral( new_Storage,cut_y)
+%Doesn't actually get the spectra, but rather shows the xcrorrelation with
+%fitdata
 [ spectra_out ] = SS_Xcorr_fit( new_Storage,fitdata,interpo,division_number );
 disp('Spectra fitted');
 

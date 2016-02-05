@@ -9,7 +9,7 @@ if summed > 0
     subplot(1,2,2);
     plot(sum(temp,2))
 else
-if length(single) > 25
+if length(single) > 25 %take the first 25 spectra
     single=single(1:25);
 end
 if length(single) ~=0
@@ -60,16 +60,16 @@ if length(single) ~=0
         test=sum(Storage(:,:,single(i)),2);
         plot(test);
         hold on;
-        if spectra ==1
-            x=1:length(Storage(:,:,single(1)));
-            if double ==1
-            f=  Spectra_out(i,4)+Spectra_out(i,1).*exp(-((x-Spectra_out(i,2))/Spectra_out(i,3)).^2)+Spectra_out(i,5).*exp(-((x-Spectra_out(i,6))/Spectra_out(i,7)).^2);
-            plot(f); 
-            else
-            f=  Spectra_out(i,1).*exp(-((x-Spectra_out(i,2))/Spectra_out(i,3)).^2) + Spectra_out(i,4);
-            plot(f);
-            end
-        end
+%         if spectra ==1
+%             x=1:length(Storage(:,:,single(1)));
+%             if double ==1
+%                 f=  Spectra_out(i,4)+Spectra_out(i,1).*exp(-((x-Spectra_out(i,2))/Spectra_out(i,3)).^2)+Spectra_out(i,5).*exp(-((x-Spectra_out(i,6))/Spectra_out(i,7)).^2);
+%                 plot(f); 
+%             else
+%                 f=  Spectra_out(i,1).*exp(-((x-Spectra_out(i,2))/Spectra_out(i,3)).^2) + Spectra_out(i,4);
+%                 plot(f);
+%             end
+%         end
     end
    end
    
