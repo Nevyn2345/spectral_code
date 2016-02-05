@@ -1,9 +1,10 @@
 %Paths
 %path_spec='/Users/Ashley/Dropbox/Work/MAtlab Work/Spectral Storm Code/MultipointABcalibration/calibration_3sf.tif';
 %path_real='/Users/Ashley/Dropbox/Work/MAtlab Work/Spectral Storm Code/MultipointABcalibration/calibration_3r.tif';
+slash = LM_osslash();
 
-path_real='Data/Realc.tif';
-path_spec='Data/Specc.tif';
+path_real=('Data', slash, 'Realc.tif');
+path_spec=('Data', slash, 'Specc.tif');
 
 %Images
 [ Image_real ] = SS_load_tiff_file(path_real);

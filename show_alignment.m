@@ -15,7 +15,7 @@ Real_points(:,4)=Real_pointst(:,1);
 
 index=find(Real_points(:,1)==Frame_number);
 
-if index >0
+if index > 0
     [ new_centres ] = transformcent( A,B,Real_points(index,2),Real_points(index,3) );
     spectral_pos=zeros(size(new_centres,1),4);
     spectral_pos(:,2:3)=ceil(new_centres(:,1:2));

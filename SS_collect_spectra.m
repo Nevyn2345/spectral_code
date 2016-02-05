@@ -62,12 +62,10 @@ for Frame_number=1:length(filesr)-1
             if spectral_pos(Point_number,2)<widthcut-cut_y && spectral_pos(Point_number,3)<widthcut-cut_y;
                 %Make sure values are positive
                 if spectral_pos(Point_number,3)-cut_y > 0 && spectral_pos(Point_number,3)+cut_y > 0 && spectral_pos(Point_number,2)-cut_x > 0 &&spectral_pos(Point_number,2)+cut_x > 0;
-                    if spectral_pos(Point_number,3)-cut_y < 128 && spectral_pos(Point_number,3)+cut_y < 128 && spectral_pos(Point_number,2)-cut_x < 128 &&spectral_pos(Point_number,2)+cut_x < 128;
-                        Storage(:,:,position)=Spectra_image(spectral_pos(Point_number,3)-cut_y:spectral_pos(Point_number,3)+cut_y,spectral_pos(Point_number,2)-cut_x:spectral_pos(Point_number,2)+cut_x);
-                        %Remember_ID(position)=Real_points(index(Point_number),1);
-                        Remember_ID(position)=spectral_pos(Point_number,4);
-                        position=position+1;
-                    end
+                    Storage(:,:,position)=Spectra_image(spectral_pos(Point_number,3)-cut_y:spectral_pos(Point_number,3)+cut_y,spectral_pos(Point_number,2)-cut_x:spectral_pos(Point_number,2)+cut_x);
+                    %Remember_ID(position)=Real_points(index(Point_number),1);
+                    Remember_ID(position)=spectral_pos(Point_number,4);
+                    position=position+1;
                 end
             end
         end
