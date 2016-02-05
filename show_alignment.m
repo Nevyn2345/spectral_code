@@ -26,18 +26,19 @@ if index > 0
     Real_image = imread(char(filesr(Frame_number)));
     
     %Plot the real image and points
-    subplot(2,1,1)
+    subplot(1,2,1)
     imagesc(Real_image);
     axis equal
     axis([0 128 0 128]);
     hold on;
-    colormap('gray');
+    %colormap('gray');
     plot(Real_points(index,2), Real_points(index,3), 'ro');
 
     %Plot the spectral image and points
-    subplot(2,1,2);
+    subplot(1,2,2);
     imagesc(Spectral_image);
-
+    
+    %check the boundaries and resize the image
     t = num2cell([0 128 0 128]);
     [minx, maxx, miny, maxy] = deal(t{:});
 
@@ -57,7 +58,7 @@ if index > 0
     axis([minx maxx miny maxy]);
 
     hold on;
-    colormap('gray');
+    %colormap('gray');
     plot(spectral_pos(index2,2), spectral_pos(index2,3), 'g*');
 end
         

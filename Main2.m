@@ -4,13 +4,16 @@
 
 %
 
+slash = LM_osslash();
+
 cut_x=3;                                                %width of Spectra
 cut_y=9;                                               %Hieght of Spectra
 %load('/Users/Ashley/Desktop/Sams/transforms.mat');      %A and B matricies
-load('/Users/Ashley/Desktop/Sams-Final/ABmat.mat')
-Real_path='/Users/Ashley/Desktop/spectral_Data/realout';            %Real Images (not really needed)
-Spectral_path='/Users/Ashley/Desktop/spectral_Data/specoutf';     %Spectra Images NEEDED
-Real_points_path='/Users/Ashley/Desktop/Sams-Final/Real-fits.csv';
+%load('/Users/Ashley/Desktop/Sams-Final/ABmat.mat')
+load('transformmat.mat');
+Real_path=strcat('Data', slash, 'real',slash);            %Real Images (not really needed)
+Spectral_path=('Data', slash, 'spectral',slash);     %Spectra Images NEEDED
+Real_points_path=('Data', slash, 'points.csv');
 % Points identifies using external code
 
 %load('/Users/Ashley/Desktop/Sams/transforms.mat');      %A and B matricies
@@ -37,9 +40,9 @@ spatial_filter=1;
 load('centre_points.mat')
 XYcentre=final_pos;
 
-radius=50;
+radius=200;
 
-[ Storage, Remember_ID,debugg_data,original_data_cut ] = SS_collect_spectra( A,B,Real_path,Spectral_path,Real_points_path,cut_x,cut_y,pixel_size,spatial_filter,XYcentre,radius);
+[ Storage, Remember_ID,debugg_data,original_data_cut, index ] = SS_collect_spectra( A,B,Real_path,Spectral_path,Real_points_path,cut_x,cut_y,pixel_size,spatial_filter,XYcentre,radius);
 
 %%%%%%%%%%%%%%%%%%%%%%%
 %Remove Background
@@ -49,7 +52,7 @@ radius=50;
 %%%%%%%%%%%%%%%%%%%%%%%
 %%% FILTER SPECTRA PRE FIT
 
-SNR=2;            % Signal to noise
+SNR=1;            % Signal to noise
 difference=20000;    % Difference from first point to final final
 average_length=5;   % length of averaging for first and final points
 centred =0;         % is the main peak near the middle (will depend on cut_y
