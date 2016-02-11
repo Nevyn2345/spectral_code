@@ -1,9 +1,12 @@
 %Shows the real image plus localisations and then the spectral image plus
 %the transformed localisations
 
-Frame_number = 1000;
-filesr=LM_filelist(Real_path);
-filess=LM_filelist(Spectral_path);
+Frame_number = 100;
+% filesr=LM_filelist(Real_path);
+% filess=LM_filelist(Spectral_path);
+Image_spec = filess;
+Image_real = filesr;
+
 Xcol=3;
 Ycol=4;
 pixel_size = 130;
@@ -22,8 +25,8 @@ if index > 0
     spectral_pos(:,1)=Real_points(index,1);
     spectral_pos(:,4)=Real_points(index,4);
     index2=find(spectral_pos(:,1)==Frame_number);
-    Spectral_image=imread(char(filess(Frame_number)));
-    Real_image = imread(char(filesr(Frame_number)));
+    Spectral_image=Image_spec(:,:,Frame_number);
+    Real_image = Image_real(:,:,Frame_number);
     
     %Plot the real image and points
     subplot(1,2,1)
@@ -60,5 +63,7 @@ if index > 0
     hold on;
     %colormap('gray');
     plot(spectral_pos(index2,2), spectral_pos(index2,3), 'g*');
+else
+    disp('No Points found in this frame')
 end
         

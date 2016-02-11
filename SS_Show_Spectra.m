@@ -57,19 +57,19 @@ if length(single) ~=0
    if length(single) > 9  
     for i=1:length(single)
         subplot(5,5,i);
-        test=sum(Storage(:,:,single(i)),2);
+        test=sum(Storage(:,:,single(i)),2); %plots the spectra as the sum through perpendicular to the spectrum
         plot(test);
         hold on;
-%         if spectra ==1
-%             x=1:length(Storage(:,:,single(1)));
-%             if double ==1
-%                 f=  Spectra_out(i,4)+Spectra_out(i,1).*exp(-((x-Spectra_out(i,2))/Spectra_out(i,3)).^2)+Spectra_out(i,5).*exp(-((x-Spectra_out(i,6))/Spectra_out(i,7)).^2);
-%                 plot(f); 
-%             else
-%                 f=  Spectra_out(i,1).*exp(-((x-Spectra_out(i,2))/Spectra_out(i,3)).^2) + Spectra_out(i,4);
-%                 plot(f);
-%             end
-%         end
+        if spectra ==1
+            x=1:length(Storage(:,:,single(1)));
+            if double ==1
+                f=  Spectra_out(i,4)+Spectra_out(i,1).*exp(-((x-Spectra_out(i,2))/Spectra_out(i,3)).^2)+Spectra_out(i,5).*exp(-((x-Spectra_out(i,6))/Spectra_out(i,7)).^2);
+                plot(f); 
+            else
+                f=  Spectra_out(i,1).*exp(-((x-Spectra_out(i,2))/Spectra_out(i,3)).^2) + Spectra_out(i,4);
+                plot(f);
+            end
+        end
     end
    end
    

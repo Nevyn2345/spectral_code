@@ -11,8 +11,8 @@ cut_y=9;                                               %Hieght of Spectra
 %load('/Users/Ashley/Desktop/Sams/transforms.mat');      %A and B matricies
 %load('/Users/Ashley/Desktop/Sams-Final/ABmat.mat')
 load('transformmat.mat');
-Real_path=strcat('Data', slash, 'real',slash);            %Real Images (not really needed)
-Spectral_path=strcat('Data', slash, 'spectral',slash);     %Spectra Images NEEDED
+Real_path=strcat('Data', slash, 'real.tif');            %Real Images (not really needed)
+Spectral_path=strcat('Data', slash, 'spectral.tif');     %Spectra Images NEEDED
 Real_points_path=strcat('Data', slash, 'points.csv');
 % Points identifies using external code
 

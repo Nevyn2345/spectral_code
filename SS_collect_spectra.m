@@ -6,9 +6,11 @@ widthcut=128; % 256
 Xcol=3;
 Ycol=4;
 pathr=Real_path;
-filesr=LM_filelist(Real_path);
+%filesr=LM_filelist(Real_path);
+filesr = SS_load_tiff_file(Real_path);
 paths=Spectral_path;
-filess=LM_filelist(Spectral_path);
+%filess=LM_filelist(Spectral_path);
+filess = SS_load_tiff_file(Spectral_path);
 
 
 Real_pointst=csvread(char(Real_points_path),1,0);
@@ -55,7 +57,8 @@ for Frame_number=1:length(filesr)-1
         spectral_pos(:,4)=Real_points(index,4);
         holdit=index;
 
-        Spectra_image=imread(char(filess(Frame_number)));
+        %Spectra_image=imread(char(filess(Frame_number)));
+        Spectra_image=filess(:,:,Frame_number);
         for Point_number=1:size(new_centres,1)
             holdit=spectral_pos(Point_number,2)<widthcut-cut_y && spectral_pos(Point_number,3)<widthcut-cut_y;
             debugg_data=[debugg_data;holdit];
