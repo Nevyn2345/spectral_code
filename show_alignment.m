@@ -1,11 +1,10 @@
 %Shows the real image plus localisations and then the spectral image plus
 %the transformed localisations
 
-Frame_number = 100;
+Frame_number = 810;
 % filesr=LM_filelist(Real_path);
 % filess=LM_filelist(Spectral_path);
-Image_spec = filess;
-Image_real = filesr;
+
 
 Xcol=3;
 Ycol=4;
@@ -19,14 +18,18 @@ Real_points(:,4)=Real_pointst(:,1);
 index=find(Real_points(:,1)==Frame_number);
 
 if index > 0
-    [ new_centres ] = transformcent( A,B,Real_points(index,2),Real_points(index,3) );
+    clear new_centres;
+    %[ new_centres ] = transformcent( A,B,Real_points(index,2),Real_points(index,3) );
+    [ xtrans, ytrans] = transformPointsInverse(tform, Real_points(index,2), Real_points(index,3));
+    new_centres(:,1) = xtrans;
+    new_centres(:,2) = ytrans;
     spectral_pos=zeros(size(new_centres,1),4);
     spectral_pos(:,2:3)=ceil(new_centres(:,1:2));
     spectral_pos(:,1)=Real_points(index,1);
     spectral_pos(:,4)=Real_points(index,4);
     index2=find(spectral_pos(:,1)==Frame_number);
-    Spectral_image=Image_spec(:,:,Frame_number);
-    Real_image = Image_real(:,:,Frame_number);
+    Spectral_image=Images(:,:,Frame_number);
+    Real_image = Imager(:,:,Frame_number);
     
     %Plot the real image and points
     subplot(1,2,1)

@@ -7,7 +7,12 @@ if summed > 0
     temp=sum(Storage,3);
     imagesc(temp);
     subplot(1,2,2);
-    plot(sum(temp,2))
+    x = 1:19;
+    cs = spline(x,[0 sum(temp,2).' 0]);
+    xx = linspace(0,19,101);
+    plot(xx,ppval(cs,xx),'-');
+    hold on
+    plot(sum(temp,2), 'r');
 else
 if length(single) > 25 %take the first 25 spectra
     single=single(1:25);

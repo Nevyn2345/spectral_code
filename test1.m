@@ -19,32 +19,34 @@ Y_spec_cut=3;
 
 
 subplot(1,2,1);
-imagesc(Calibration_real(:,:,1));
+imagesc(Calibration_real(:,:,10));
 axis equal
 axis([0 height 0 width])
 subplot(1,2,2);
-imagesc(Calibration_spec(:,:,1));
+imagesc(Calibration_spec(:,:,10));
 axis equal
 axis([0 height 0 width])
 
-[x,y] = ginput(6);
+npoints = 10;
+
+[x,y] = ginput(20);
 X1=floor(x(1:2:end)); %real vals
 X2=floor(x(2:2:end)); %spec vals
 Y1=floor(y(1:2:end));
 Y2=floor(y(2:2:end));
 
-
+%%
 %Cut out the selected areas of the image
 clear real_section;
-for Q=1:3
+for Q=1:npoints
 real_section(:,:,Q)=Calibration_real(Y1(Q)-real_cut:Y1(Q)+real_cut,X1(Q)-real_cut:X1(Q)+real_cut);
 end
 clear spec_section;
-for Q=1:3
+for Q=1:npoints
 spec_section(:,:,Q)=Calibration_spec(Y2(Q)-X_spec_cut:Y2(Q)+X_spec_cut,X2(Q)-Y_spec_cut:X2(Q)+Y_spec_cut);
 end
 
-for Q=1:3
+for Q=1:npoints
     %real
     temp=real_section(:,:,Q);
     %work out position of max value in cut 'b'
@@ -66,19 +68,23 @@ end
 subplot(1,2,1);
 imagesc(Calibration_real(:,:,1));
 hold on;
-for Q=1:3
+for Q=1:npoints
     plot(final_points(Q,1),final_points(Q,2),'y*');
 end
     
 subplot(1,2,2);
 imagesc(Calibration_spec(:,:,1));
 hold on;
-for Q=1:3
+for Q=1:npoints
     plot(final_points(Q,3),final_points(Q,4),'y*');
 end
     
 
 tform = fitgeotrans([X2 Y2], [X1 Y1], 'affine')
+
+[ xtrans, ytrans] = transformPointsInverse(tform, final_points(:,1), final_points(:,2));
+
+plot( xtrans, ytrans, 'ro')
 
 %[ final, A,B ] = TranslateCalibration([final_points(:,1) final_points(:,2)],[final_points(:,3) final_points(:,4)], 1, [1 2 3], [1 2 3] );
 

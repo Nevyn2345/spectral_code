@@ -1,17 +1,10 @@
-function [ Storage, Remember_ID,debugg_data,original_data_cut, index ] = SS_collect_spectra( A1,B1,Real_path,Spectral_path,Real_points_path,cut_x,cut_y,pixel_size,spatial_filter,XYcentre,radius)
+function [ Storage, Remember_ID,debugg_data,original_data_cut, index ] = SS_collect_spectra( tform,ImageR,ImageS,Real_points_path,cut_x,cut_y,pixel_size,spatial_filter,XYcentre,radius)
 
 %UNTITLED4 Summary of this function goes here
 %   Detailed explanation goes here
 widthcut=128; % 256
 Xcol=3;
 Ycol=4;
-pathr=Real_path;
-%filesr=LM_filelist(Real_path);
-filesr = SS_load_tiff_file(Real_path);
-paths=Spectral_path;
-%filess=LM_filelist(Spectral_path);
-filess = SS_load_tiff_file(Spectral_path);
-
 
 Real_pointst=csvread(char(Real_points_path),1,0);
 Real_points(:,1)=Real_pointst(:,2);
@@ -45,12 +38,16 @@ debugg_data(1,1)=0;
 %debugg_data(1,2)=0;
 Storage=zeros((2*cut_y)+1,(2*cut_x)+1,length(Real_points));
 position=1;
-for Frame_number=1:length(filesr)-1
+for Frame_number=1:length(ImageR)-1
     disp(Frame_number);
     index=find(Real_points(:,1)==Frame_number);
     if index >0
         %obtain spectral centre points based on calibration
-        [ new_centres ] = transformcent( A1,B1,Real_points(index,2),Real_points(index,3) );
+        clear new_centres;
+        %[ new_centres ] = transformcent( A1,B1,Real_points(index,2),Real_points(index,3) );
+        [ xtrans, ytrans] = transformPointsInverse(tform, Real_points(index,2), Real_points(index,3));
+        new_centres(:,1) = xtrans;
+        new_centres(:,2) = ytrans;
         spectral_pos=zeros(size(new_centres,1),4);
         spectral_pos(:,2:3)=ceil(new_centres(:,1:2));
         spectral_pos(:,1)=Real_points(index,1);
@@ -58,7 +55,7 @@ for Frame_number=1:length(filesr)-1
         holdit=index;
 
         %Spectra_image=imread(char(filess(Frame_number)));
-        Spectra_image=filess(:,:,Frame_number);
+        Spectra_image=ImageS(:,:,Frame_number);
         for Point_number=1:size(new_centres,1)
             holdit=spectral_pos(Point_number,2)<widthcut-cut_y && spectral_pos(Point_number,3)<widthcut-cut_y;
             debugg_data=[debugg_data;holdit];

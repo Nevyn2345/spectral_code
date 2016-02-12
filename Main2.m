@@ -14,6 +14,10 @@ load('transformmat.mat');
 Real_path=strcat('Data', slash, 'real.tif');            %Real Images (not really needed)
 Spectral_path=strcat('Data', slash, 'spectral.tif');     %Spectra Images NEEDED
 Real_points_path=strcat('Data', slash, 'points.csv');
+
+Imager = SS_load_tiff_file(Real_path);
+Images = SS_load_tiff_file(Spectral_path);
+
 % Points identifies using external code
 
 %load('/Users/Ashley/Desktop/Sams/transforms.mat');      %A and B matricies
@@ -42,7 +46,7 @@ XYcentre=final_pos;
 
 radius=200;
 
-[ Storage, Remember_ID,debugg_data,original_data_cut, index ] = SS_collect_spectra( A,B,Real_path,Spectral_path,Real_points_path,cut_x,cut_y,pixel_size,spatial_filter,XYcentre,radius);
+[ Storage, Remember_ID,debugg_data,original_data_cut, index ] = SS_collect_spectra( tform, Imager,Images,Real_points_path,cut_x,cut_y,pixel_size,spatial_filter,XYcentre,radius);
 
 %%%%%%%%%%%%%%%%%%%%%%%
 %Remove Background
