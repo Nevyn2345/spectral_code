@@ -4,41 +4,25 @@
 
 %
 
-slash = LM_osslash();
-
 cut_x=3;                                                %width of Spectra
 cut_y=9;                                               %Hieght of Spectra
 %load('/Users/Ashley/Desktop/Sams/transforms.mat');      %A and B matricies
 %load('/Users/Ashley/Desktop/Sams-Final/ABmat.mat')
 load('transformmat.mat');
-Real_path=strcat('Data', slash, 'real.tif');            %Real Images (not really needed)
-Spectral_path=strcat('Data', slash, 'spectral.tif');     %Spectra Images NEEDED
-Real_points_path=strcat('Data', slash, 'points.csv');
+[filename, Path] = uigetfile('*.tif');
+Real_path = strcat(Path,filename);
+[filename, Path] = uigetfile('*.tif', 'Select Spectra File', Path);
+Spectral_path = strcat(Path,filename);
+[filename, Path] = uigetfile('*.csv', 'Select Localisation File', Path);
+Real_points_path = strcat(Path,filename);
 
 Imager = SS_load_tiff_file(Real_path);
 Images = SS_load_tiff_file(Spectral_path);
-
-% Points identifies using external code
-
-%load('/Users/Ashley/Desktop/Sams/transforms.mat');      %A and B matricies
-%load('/Users/Ashley/Desktop/Sams-Final/ABmat.mat')
-%Real_path='/Users/Ashley/Desktop/spectral_Data/cali_real';            %Real Images (not really needed)
-%Spectral_path='/Users/Ashley/Desktop/spectral_Data/cali_spec';     %Spectra Images NEEDED
-%Real_points_path='/Users/Ashley/Desktop/spectral_Data/cali_real.csv';
-% Points identifies using external code
 
 pixel_size=130;                                         % Size of Pixels in nm if data in pixels set to 1.
 
 disp('Spectra loaded');
 %Data should be in the format
-
-Starting_point=csvread(char(Real_points_path),1,0);
-Starting_point(:,1)=Starting_point(:,3);
-Starting_point(:,2)=Starting_point(:,4);
-Starting_point(:,1:2)=Starting_point(:,1:2)/pixel_size;
-
-
-
 
 spatial_filter=1;
 load('centre_points.mat')
@@ -70,7 +54,7 @@ disp(Bunny);
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%% Fit spectra
-load('fitdata.mat');
+load('fitdata647.mat');
 interpo=1;
 division_number=20;
                                       % cut points
@@ -86,8 +70,8 @@ disp('Spectra fitted');
 
 %%%%%%%%%%%%%%%%%%%%%%
 %%%% show the spectra
-
-summed=0;               %all the data
+%%
+summed=1;               %all the data
 single=indfinal;        % just the filtered dat
 spectra=1;              % show the fitted data
 double=0;               % is it double or single

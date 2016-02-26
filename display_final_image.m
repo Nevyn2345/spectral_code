@@ -4,17 +4,24 @@
 %indfinal is the list of indexes for which we have processed the spectra
 %spectra_out is xcorrelation of the spectra
 
+index = 1:size(new_Storage,3);
+index = index';
+temp = sum(new_Storage, 2);
+[~, ai] = max(temp, [], 1);
 
-index = 1:size(spectra_out,1);
-index = index'
-ai = max(spectra_out, [], 2);
+spectra_out(:,5) = Remember_ID';
+spectra_outf(:,:) = spectra_out(spectra_out(:,3)<5,:);
+ab = spectra_outf(:,2) > 12.5;
+specf = spectra_outf(ab,:);
+    
+%ab = index(ai > (10));
 
-ab = index(ai > (1*10^11));
+figures
 
-plot(original_data_cut(:,2), original_data_cut(:,3), '.');
+plot(original_data_cut(spectra_outf(:,5),2), original_data_cut(spectra_outf(:,5),3), '.', 'MarkerSize', 1);
 hold on
 
-plot(original_data_cut(ab, 2), original_data_cut(ab,3), 'r.');
+plot(original_data_cut(specf(:,5), 2), original_data_cut(specf(:,5),3), 'r.', 'MarkerSize',1);
 
 %%
 

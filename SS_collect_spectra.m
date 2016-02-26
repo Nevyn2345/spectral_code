@@ -2,7 +2,7 @@ function [ Storage, Remember_ID,debugg_data,original_data_cut, index ] = SS_coll
 
 %UNTITLED4 Summary of this function goes here
 %   Detailed explanation goes here
-widthcut=128; % 256
+widthcut=256; % 256
 Xcol=3;
 Ycol=4;
 
@@ -10,6 +10,10 @@ Real_pointst=csvread(char(Real_points_path),1,0);
 Real_points(:,1)=Real_pointst(:,2);
 Real_points(:,2:3)=Real_pointst(:,Xcol:Ycol)/pixel_size;
 Real_points(:,4)=Real_pointst(:,1);
+
+for i = 1:size(Real_points)
+    Real_points(i,5) = i;
+end
 
 position=1;
 %spatial_filter only takes points from winin a certain area, presumably for

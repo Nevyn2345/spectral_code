@@ -1,0 +1,47 @@
+%Displays the final image
+
+%original_data_cut is the positions of the points
+%indfinal is the list of indexes for which we have processed the spectra
+%spectra_out is xcorrelation of the spectra
+
+index = 1:size(new_Storage,3);
+index = index';
+temp = sum(new_Storage, 2);
+[~, ai] = max(temp, [], 1);
+
+spectra_out(:,5) = Remember_ID';
+spectra_outf(:,:) = spectra_out(spectra_out(:,3)<5,:);
+ab = spectra_outf(:,2) > 12.5;
+specf = spectra_outf(ab,:);
+    
+%ab = index(ai > (10));
+
+figure
+
+plot(original_data_cut(spectra_outf(:,5),2), original_data_cut(spectra_outf(:,5),3), '.', 'MarkerSize', 1);
+hold on
+
+plot(original_data_cut(specf(:,5), 2), original_data_cut(specf(:,5),3), 'r.', 'MarkerSize',1);
+
+%%
+
+histogram(ai, 100)
+
+%% plot spectra
+
+for i=1:25
+    subplot(5,5,i)
+    plot(spectra_out(i,:))
+end
+
+%%
+index = 1:size(spectra_out,1);
+index = index'
+ai = index(spectra_out(:,1)>0);
+
+%ab = index(ai > (1*10^11));
+
+plot(original_data_cut(:,2), original_data_cut(:,3), '.');
+hold on
+
+plot(original_data_cut(ai, 2), original_data_cut(ai,3), 'r.');

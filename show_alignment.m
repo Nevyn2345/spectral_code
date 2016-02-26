@@ -1,7 +1,7 @@
 %Shows the real image plus localisations and then the spectral image plus
 %the transformed localisations
 
-Frame_number = 810;
+Frame_number = 500;
 % filesr=LM_filelist(Real_path);
 % filess=LM_filelist(Spectral_path);
 
@@ -10,6 +10,8 @@ Xcol=3;
 Ycol=4;
 pixel_size = 130;
 
+clear Real_pointst
+clear Real_points
 Real_pointst=csvread(char(Real_points_path),1,0);
 Real_points(:,1)=Real_pointst(:,2);
 Real_points(:,2:3)=Real_pointst(:,Xcol:Ycol)/pixel_size;
@@ -34,8 +36,8 @@ if index > 0
     %Plot the real image and points
     subplot(1,2,1)
     imagesc(Real_image);
-    axis equal
-    axis([0 128 0 128]);
+    %axis equal
+    %axis([0 128 0 128]);
     hold on;
     %colormap('gray');
     plot(Real_points(index,2), Real_points(index,3), 'ro');
