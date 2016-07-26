@@ -1,8 +1,8 @@
-function [ Storage, Remember_ID,debugg_data,original_data_cut, index ] = SS_collect_spectra( tform,ImageR,ImageS,Real_points_path,cut_x,cut_y,pixel_size,spatial_filter,XYcentre,radius)
+function [ Storage, Remember_ID,debugg_data,original_data_cut, index, datar ] = SS_collect_spectra( tform,ImageR,ImageS,Real_points_path,cut_x,cut_y,pixel_size,spatial_filter,XYcentre,radius)
 
 %UNTITLED4 Summary of this function goes here
 %   Detailed explanation goes here
-widthcut=256; % 256
+widthcut= size(ImageR,1); % 256
 Xcol=3;
 Ycol=4;
 
@@ -32,16 +32,13 @@ if spatial_filter==1;
 end
     
 
-
-
-
-
-
 Remember_ID=0;
 debugg_data(1,1)=0;
 %debugg_data(1,2)=0;
 Storage=zeros((2*cut_y)+1,(2*cut_x)+1,length(Real_points));
 position=1;
+datar = [];
+datas = [];
 for Frame_number=1:length(ImageR)-1
     disp(Frame_number);
     index=find(Real_points(:,1)==Frame_number);
@@ -49,6 +46,7 @@ for Frame_number=1:length(ImageR)-1
         %obtain spectral centre points based on calibration
         clear new_centres;
         %[ new_centres ] = transformcent( A1,B1,Real_points(index,2),Real_points(index,3) );
+        real_points_temp= Real_points(index,:);
         [ xtrans, ytrans] = transformPointsInverse(tform, Real_points(index,2), Real_points(index,3));
         new_centres(:,1) = xtrans;
         new_centres(:,2) = ytrans;
@@ -65,10 +63,14 @@ for Frame_number=1:length(ImageR)-1
             debugg_data=[debugg_data;holdit];
             if spectral_pos(Point_number,2)<widthcut-cut_y && spectral_pos(Point_number,3)<widthcut-cut_y;
                 %Make sure values are positive
+                if Frame_number == 101
+                    b = 5;
+                end
                 if spectral_pos(Point_number,3)-cut_y > 0 && spectral_pos(Point_number,3)+cut_y > 0 && spectral_pos(Point_number,2)-cut_x > 0 &&spectral_pos(Point_number,2)+cut_x > 0;
                     Storage(:,:,position)=Spectra_image(spectral_pos(Point_number,3)-cut_y:spectral_pos(Point_number,3)+cut_y,spectral_pos(Point_number,2)-cut_x:spectral_pos(Point_number,2)+cut_x);
                     %Remember_ID(position)=Real_points(index(Point_number),1);
                     Remember_ID(position)=spectral_pos(Point_number,4);
+                    datar(position,:) = real_points_temp(Point_number,:);
                     position=position+1;
                 end
             end

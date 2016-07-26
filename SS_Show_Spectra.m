@@ -5,14 +5,17 @@ figure;
 if summed > 0
     subplot(1,2,1);
     temp=sum(Storage,3);
-    imagesc(temp);
+    temp2 = sum(Storage,3);
+    imagesc(temp2);
+    axis equal
+    axis tight
     subplot(1,2,2);
-    x = 1:19;
-    cs = spline(x,[0 sum(temp,2).' 0]);
-    xx = linspace(0,19,101);
+    x = 1:size(Storage,1);
+    cs = spline(x,[0 sum(temp2,2).' 0]);
+    xx = linspace(0,size(Storage,1),101);
     plot(xx,ppval(cs,xx),'-');
     hold on
-    plot(sum(temp,2), 'r');
+    plot(sum(temp2,2), 'r');
 else
 if length(single) > 25 %take the first 25 spectra
     single=single(1:25);

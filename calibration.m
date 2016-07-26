@@ -27,7 +27,7 @@ imagesc(Calibration_spec(:,:,cal_frame));
 axis equal
 axis([0 height 0 width])
 
-npoints = 6;
+npoints = 7;
 
 [x,y] = ginput(npoints*2);
 X1=floor(x(1:2:end)); %real vals
@@ -45,7 +45,7 @@ clear spec_section;
 
 [mismatchymin, mismatchymax, mismatchxmin, mismatchxmax] = deal(0);
 
-spec_section = zeros( X_spec_cut*2+1,Y_spec_cut*2+1, npoints)
+spec_section = zeros( X_spec_cut*2+1,Y_spec_cut*2+1, npoints);
 
 for Q=1:npoints
     if Y2(Q)-X_spec_cut <= 0
@@ -64,6 +64,31 @@ for Q=1:npoints
     spec_section(1:spec_right-spec_left+1,1:spec_bottom-spec_top+1,Q)=Calibration_spec(spec_left:spec_right,spec_top:spec_bottom,cal_frame)
 end
 %%
+
+
+options=optimset('Display','off','TolFun',1e-8,'TolX',1e-8,'MaxFunEvals',500);
+
+%First is scaling
+%Second is X pos
+%Third is X width
+%Fourth is Y pos
+%Fith os Y width
+%6 is offset
+
+lower=[1,1,1,1,1,0];
+%The widths need to be better done
+
+upper=[1000,Xs,1000,Xs,1000,1000];
+guesses=[max(max(Image)),Xs/2,3,Xs/2,3,min(min(Image_stack(:,:,point_to_use)))];
+
+
+[bestfit,~,~,~]=lsqcurvefit(@Gaussian2D,guesses,x,Z(:),lower,upper,options);
+
+fits = [fits; bestfit];
+
+
+
+
 for Q=1:npoints
     %real
     temp=real_section(:,:,Q);
@@ -96,11 +121,11 @@ subplot(1,2,2);
 imagesc(Calibration_spec(:,:,cal_frame));
 hold on;
 for Q=1:npoints
-    plot(final_points(Q,3),final_points(Q,4),'g*');
+    plot(final_points(Q,3),final_points(Q,4),'b*');
 end
     
 
-tform = fitgeotrans([final_points(:,3) final_points(:,4)], [final_points(:,1) final_points(:,2)], 'affine')
+tform = fitgeotrans([final_points(:,3) final_points(:,4)], [final_points(:,1) final_points(:,2)], 'projective')
 
 [ xtrans, ytrans] = transformPointsInverse(tform, final_points(:,1), final_points(:,2));
 

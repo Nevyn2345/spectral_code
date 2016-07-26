@@ -1,7 +1,7 @@
 %Shows the real image plus localisations and then the spectral image plus
 %the transformed localisations
 
-Frame_number = 500;
+Frame_number = 16;
 % filesr=LM_filelist(Real_path);
 % filess=LM_filelist(Spectral_path);
 
@@ -14,7 +14,7 @@ clear Real_pointst
 clear Real_points
 Real_pointst=csvread(char(Real_points_path),1,0);
 Real_points(:,1)=Real_pointst(:,2);
-Real_points(:,2:3)=Real_pointst(:,Xcol:Ycol)/pixel_size;
+Real_points(:,2:3)=Real_pointst(:,Xcol:Ycol)./pixel_size;
 Real_points(:,4)=Real_pointst(:,1);
 
 index=find(Real_points(:,1)==Frame_number);
@@ -36,20 +36,17 @@ if index > 0
     %Plot the real image and points
     subplot(1,2,1)
     imagesc(Real_image);
-    %axis equal
-    %axis([0 128 0 128]);
     hold on;
-    %colormap('gray');
     plot(Real_points(index,2), Real_points(index,3), 'ro');
-
+    axis square
+    
     %Plot the spectral image and points
     subplot(1,2,2);
     imagesc(Spectral_image);
-    
     %check the boundaries and resize the image
     t = num2cell([0 128 0 128]);
     [minx, maxx, miny, maxy] = deal(t{:});
-
+    
     if min(spectral_pos(index2,2))-5 < 0
         minx = min(spectral_pos(index2,2))-5;
     end
@@ -61,10 +58,9 @@ if index > 0
     end
     if max(spectral_pos(index2,3))+5 > 128
         maxy = max(spectral_pos(index2,3))+5;
-    end            
-    axis equal
-    axis([minx maxx miny maxy]);
-
+    end
+    %axis([minx maxx miny maxy]);
+    axis square
     hold on;
     %colormap('gray');
     plot(spectral_pos(index2,2), spectral_pos(index2,3), 'g*');

@@ -1,7 +1,7 @@
 function [ params ] = LM_fit( extract )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
-
+    extract = im2double(extract, 'indexed');
     ex_dim=size(extract,1);
     
     %scale extract so intensities are roughly on a range of 0 to the dimensions of the region

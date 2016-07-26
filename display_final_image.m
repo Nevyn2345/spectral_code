@@ -4,28 +4,33 @@
 %indfinal is the list of indexes for which we have processed the spectra
 %spectra_out is xcorrelation of the spectra
 
-index = 1:size(new_Storage,3);
+index = 1:size(Storage,3);
+spectra_out(:,5) = 1:size(spectra_out,1);
 index = index';
-temp = sum(new_Storage, 2);
+temp = sum(Storage, 2);
 [~, ai] = max(temp, [], 1);
-
-spectra_out(:,5) = Remember_ID';
-spectra_outf(:,:) = spectra_out(spectra_out(:,3)<5,:);
-ab = spectra_outf(:,2) > 12.5;
-specf = spectra_outf(ab,:);
-    
+disp('dgfgd')
+spectra_outf2 = [];
+spectra_outf3 = [];
+spectra_outf = [];
+% %spectra_out(:,5) = Remember_ID';
+spectra_outf(:,:) = spectra_out(spectra_out(:,3)<6.9,:);
+spectra_outf2(:,:) = spectra_outf(spectra_outf(:,3) > 2.1,:);
+% %spectra_outf2(:,:) = spectra_outf3(spectra_outf3(:,1) > 10000,:);
+ab = spectra_outf2(:,2) > 26;
+specf = spectra_outf2(ab,:);
+disp('dgfgd2')
 %ab = index(ai > (10));
 
-figures
+figure
 
-plot(original_data_cut(spectra_outf(:,5),2), original_data_cut(spectra_outf(:,5),3), '.', 'MarkerSize', 1);
+plot(datar(spectra_outf2(:,5),2), datar(spectra_outf2(:,5),3), '.', 'MarkerSize', 5);
 hold on
-
-plot(original_data_cut(specf(:,5), 2), original_data_cut(specf(:,5),3), 'r.', 'MarkerSize',1);
+plot(datar(specf(:,5), 2), datar(specf(:,5),3), 'r.', 'MarkerSize',5);
 
 %%
 
-histogram(ai, 100)
+histogram(ai)
 
 %% plot spectra
 
