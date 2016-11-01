@@ -135,18 +135,26 @@ try
     c = coordinates;
     
     cutr = imreal(c(2)-cut:c(2)+cut,c(1)-cut:c(1)+cut);
+%     a = sum(cutr,2);
+%     xx = linspace(1,11,100);
+%     cs = spline(1:11,sum(cutr,2));
+%     p = ppval(cs,xx)'
+%     [~,b] = max(p);
+%     b = (b+10)/10
     fit = LM_fit(double(cutr));
     %[~,b] = max(cutr(:));
     %[x,y] = ind2sub(size(cutr),b);
 %     tempr(1) = (c(1) - (cut+1)) + y;
 %     tempr(2) = (c(2) - (cut+1)) + x;
-    tempr(3) = (c(1) - (cut+1))+ fit(:,2)
+    tempr(3) = (c(1) - (cut+1))+ fit(:,2);
     tempr(4) = (c(2) - (cut+1))+ fit(:,4);
     tempr(2) = round(get(handles.slider2, 'Value'));
     tempr(1) = size(co,1)+1;
     co(end+1,:) = tempr;
     hold on
     plot(co(:,3), co(:,4), 'ro')
+%     plot(co(:,3),(c(2) - (cut+1))+ b, 'go');
+    size(co,1)
     hold off
 catch
     co = getappdata(axesHandle,'coordinates');
@@ -157,13 +165,14 @@ catch
     fit = LM_fit(double(cutr));
     [~,b] = max(cutr(:));
     [x,y] = ind2sub(size(cutr),b);
-    tempr(3) = (c(1) - (cut+1))+ fit(:,2)
+    tempr(3) = (c(1) - (cut+1))+ fit(:,2);
     tempr(4) = (c(2) - (cut+1))+ fit(:,4);
     tempr(2) = round(get(handles.slider2, 'Value'));
     tempr(1) = size(co,1)+1;
     co = tempr;
     hold on
     plot(co(:,3), co(:,4), 'ro')
+    size(co,1)
     hold off
 end
 setappdata(axesHandle, 'coordinates', co);
@@ -178,4 +187,4 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 g = getappdata(handles.axes1, 'coordinates');
 gspec = getappdata(handles.axes2, 'coordinates');
-save('points560.mat', 'g', 'gspec');
+save('points.mat', 'g', 'gspec');

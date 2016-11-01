@@ -5,19 +5,20 @@
 
 cut_x=5;                                                %width of Spectra
 cut_y=25;                                               %Hieght of Spectra
-%load('/Users/Ashley/Desktop/Sams/transforms.mat');      %A and B matricies
-%load('/Users/Ashley/Desktop/Sams-Final/ABmat.mat')
-%load('transformmat.mat');
+
 if exist('Path', 'var') == 1
     [filename, Path] = uigetfile('*.tif', 'Select Real File', Path);
 else
     [filename, Path] = uigetfile('*.tif', 'Select Real File');
 end
 Real_path = strcat(Path,filename);
-[filename, Path] = uigetfile('*.tif', 'Select Spectra File', Path);
-Spectral_path = strcat(Path,filename);
+[filename, Path2] = uigetfile('*.tif', 'Select Spectra File', Path);
+Spectral_path = strcat(Path2,filename);
 [filename, Path] = uigetfile('*.csv', 'Select Localisation File', Path);
 Real_points_path = strcat(Path,filename);
+
+load('points.mat');
+tform = fitgeotrans([gspec(:,3) gspec(:,4)], [g(:,3) g(:,4)], 'affine');
 
 Imager = SS_load_tiff_file(Real_path);
 Images = SS_load_tiff_file(Spectral_path);
@@ -49,6 +50,7 @@ average_length=5;   % length of averaging for first and final points
 centred =0;         % is the main peak near the middle (will depend on cut_y
 
 [ indfinal ] = SS_Filter_spectra(Storage, difference, average_length,SNR,centred );
+indfinal = 1:size(Storage,3);
 disp('Spectra Pre filtered');
 Bunny=['Selected ',num2str(length(indfinal))];
 disp(Bunny);

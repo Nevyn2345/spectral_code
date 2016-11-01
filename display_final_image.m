@@ -17,14 +17,14 @@ spectra_outf = [];
 spectra_outf(:,:) = spectra_out(spectra_out(:,3)<6.9,:);
 spectra_outf2(:,:) = spectra_outf(spectra_outf(:,3) > 2.1,:);
 % %spectra_outf2(:,:) = spectra_outf3(spectra_outf3(:,1) > 10000,:);
-ab = spectra_outf2(:,2) > 26;
-specf = spectra_outf2(ab,:);
+ab = spectra_outf2(:,2) > 30;
+specf = spectra_out(ab,:);
 disp('dgfgd2')
 %ab = index(ai > (10));
 
 figure
 
-plot(datar(spectra_outf2(:,5),2), datar(spectra_outf2(:,5),3), '.', 'MarkerSize', 5);
+plot(datar(spectra_out(:,5),2), datar(spectra_out(:,5),3), '.', 'MarkerSize', 5);
 hold on
 plot(datar(specf(:,5), 2), datar(specf(:,5),3), 'r.', 'MarkerSize',5);
 

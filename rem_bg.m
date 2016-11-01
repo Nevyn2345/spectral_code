@@ -16,7 +16,7 @@ for I = 1:size(Storage,3)
         if length(empties) > 0
             xposs = ceil(xtrans);
             yposs = ceil(ytrans);
-            a = (Images(xposs - xcut:xposs + xcut,yposs - ycut:yposs + ycut,empties(1)))';
+            a = (Images(xposs - cut_x:xposs + cut_x,yposs - cut_y:yposs + cut_y,empties(1)))';
             a1 = im2double(a, 'indexed');
             newS(:,:,end+1) = Storage(:,:,I) - a1;
         end
